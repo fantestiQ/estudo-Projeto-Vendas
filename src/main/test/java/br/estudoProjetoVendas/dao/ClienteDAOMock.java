@@ -1,7 +1,10 @@
-package main.test.java.br.com.estudoProjetoVendas.dao;
+package main.test.java.br.estudoProjetoVendas.dao;
 
-import main.java.br.com.estudoProjetoVendas.dao.IClienteDAO;
-import main.java.br.com.estudoProjetoVendas.domain.Cliente;
+
+import br.com.estudoProjetoVendas.dao.IClienteDAO;
+import br.com.estudoProjetoVendas.domain.Cliente;
+
+import java.util.List;
 
 public class ClienteDAOMock implements IClienteDAO {
     @Override
@@ -28,5 +31,10 @@ public class ClienteDAOMock implements IClienteDAO {
     @Override
     public Cliente editar(Long cpf, Cliente cliente) {
         return null;
+    }
+
+    @Override
+    public List<Cliente> buscarTodos() {
+        return List.of();
     }
 }

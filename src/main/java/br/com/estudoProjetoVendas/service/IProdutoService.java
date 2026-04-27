@@ -1,14 +1,19 @@
-package main.java.br.com.estudoProjetoVendas.service;
+package br.com.estudoProjetoVendas.service;
 
-import main.java.br.com.estudoProjetoVendas.domain.Produto;
+
+import br.com.estudoProjetoVendas.domain.Produto;
+
+import java.util.List;
 
 public interface IProdutoService {
     
-    void salvar(Produto produto);
+    void salvar(Produto produto) throws Exception;
 
-    Produto buscarPorId(Long id);
+    Produto buscarPorId(Long id) throws Exception;
 
-    Produto editar(Long id, Produto produto);
+    Produto editar(Long id, Produto produto) throws Exception;
 
-    void remover(Long id);
+    void remover(Long id) throws Exception;
+
+    List<Produto> listarTodos();
 }

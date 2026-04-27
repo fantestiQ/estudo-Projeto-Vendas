@@ -1,9 +1,14 @@
-package main.java;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        String url  = "jdbc:mysql://localhost:3307/estudos_db";
+        String user = "aluno";
+        String pass = "aluno123";
 
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            System.out.println("Conectado! " + conn.getCatalog());
+        }
     }
 }

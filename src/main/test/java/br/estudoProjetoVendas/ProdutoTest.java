@@ -1,11 +1,11 @@
-package main.test.java.br.com.estudoProjetoVendas;
+package main.test.java.br.estudoProjetoVendas;
 
-import main.java.br.com.estudoProjetoVendas.dao.IProdutoDAO;
-import main.java.br.com.estudoProjetoVendas.dao.ProdutoDAO;
-import main.java.br.com.estudoProjetoVendas.domain.Cliente;
-import main.java.br.com.estudoProjetoVendas.domain.Produto;
-import main.java.br.com.estudoProjetoVendas.service.IProdutoService;
-import main.java.br.com.estudoProjetoVendas.service.ProdutoService;
+
+import br.com.estudoProjetoVendas.dao.IProdutoDAO;
+import br.com.estudoProjetoVendas.dao.ProdutoDAO;
+import br.com.estudoProjetoVendas.domain.Produto;
+import br.com.estudoProjetoVendas.service.IProdutoService;
+import br.com.estudoProjetoVendas.service.ProdutoService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,9 +21,9 @@ public class ProdutoTest {
     }
 
     @Test
-    public void cadastrarProduto(){
+    public void cadastrarProduto() throws Exception {
         Produto produto = new Produto("Camisa preta M","30.00",
-                "Roupas",1L);
+                "Roupas");
 
         produtoService.salvar(produto);
 
@@ -33,9 +33,9 @@ public class ProdutoTest {
 
     }
     @Test
-    public void editarProduto() {
+    public void editarProduto() throws Exception {
         Produto produto = new Produto("Camisa preta M","30.00",
-                "Roupas",1L);
+                "Roupas");
 
         produtoService.salvar(produto);
         Produto ProdutoSalvo = produtoService.buscarPorId(produto.getId());
@@ -53,9 +53,9 @@ public class ProdutoTest {
 
 
     @Test
-    public void removerProduto() {
+    public void removerProduto() throws Exception {
         Produto produto = new Produto("Camisa preta M","30.00",
-                "Roupas",1L);
+                "Roupas");
 
         produtoService.salvar(produto);
         Produto produtoSalvo = produtoService.buscarPorId(produto.getId());

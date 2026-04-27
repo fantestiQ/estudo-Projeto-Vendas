@@ -1,13 +1,19 @@
-package main.java.br.com.estudoProjetoVendas.dao;
+package br.com.estudoProjetoVendas.dao;
 
-import main.java.br.com.estudoProjetoVendas.domain.Cliente;
+
+import br.com.estudoProjetoVendas.domain.Cliente;
+
+import java.util.List;
 
 public interface IClienteDAO {
-    void salvar(Cliente cliente);
+    void salvar(Cliente cliente) throws Exception;
 
-    Cliente buscarClientePorCPF(Long cpf);
+    Cliente buscarClientePorCPF(Long cpf) throws Exception;
 
-    void remover(Long cpf);
+    void remover(Long cpf) throws Exception;
 
-    Cliente editar(Long cpf, Cliente cliente);
+    Cliente editar(Long cpf, Cliente cliente) throws Exception;
+
+    List<Cliente> buscarTodos() throws Exception;
+
 }

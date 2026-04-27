@@ -1,4 +1,4 @@
-package main.java.br.com.estudoProjetoVendas.domain;
+package br.com.estudoProjetoVendas.domain;
 
 import java.math.BigDecimal;
 
@@ -8,7 +8,7 @@ public class Produto {
     private String categoria;
     private Long id;
 
-    public Produto(String descricao, String preco, String categoria, Long id) {
+    public Produto(String descricao, String preco, String categoria) {
         this.descricao = descricao;
         this.preco = new BigDecimal(preco);
         this.categoria = categoria;

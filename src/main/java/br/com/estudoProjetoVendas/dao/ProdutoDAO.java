@@ -1,8 +1,11 @@
-package main.java.br.com.estudoProjetoVendas.dao;
+package br.com.estudoProjetoVendas.dao;
 
-import main.java.br.com.estudoProjetoVendas.SingletonMap;
-import main.java.br.com.estudoProjetoVendas.domain.Produto;
+import br.com.estudoProjetoVendas.SingletonMap;
+import br.com.estudoProjetoVendas.dao.IProdutoDAO;
+import br.com.estudoProjetoVendas.domain.Produto;
 
+
+import java.util.List;
 import java.util.Map;
 
 public class ProdutoDAO implements IProdutoDAO {
@@ -25,5 +28,10 @@ public class ProdutoDAO implements IProdutoDAO {
     @Override
     public void remover(Long id) {
         SingletonMap.remove(Produto.class,id);
+    }
+
+    @Override
+    public List<Produto> listarTodos() {
+        return List.of();
     }
 }

@@ -1,4 +1,4 @@
-package main.java.br.com.estudoProjetoVendas;
+package br.com.estudoProjetoVendas;
 
 import java.util.HashMap;
 import java.util.Map;

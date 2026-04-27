@@ -1,11 +1,12 @@
-package main.test.java.br.com.estudoProjetoVendas;
+package main.test.java.br.estudoProjetoVendas;
 
-import main.java.br.com.estudoProjetoVendas.dao.ClienteDAO;
-import main.java.br.com.estudoProjetoVendas.dao.IClienteDAO;
-import main.java.br.com.estudoProjetoVendas.service.ClienteService;
-import main.java.br.com.estudoProjetoVendas.service.IClienteService;
-import main.java.br.com.estudoProjetoVendas.domain.Cliente;
-import main.test.java.br.com.estudoProjetoVendas.dao.ClienteDAOMock;
+
+import br.com.estudoProjetoVendas.dao.ClienteDAO;
+import br.com.estudoProjetoVendas.dao.IClienteDAO;
+import br.com.estudoProjetoVendas.domain.Cliente;
+import br.com.estudoProjetoVendas.service.ClienteService;
+import br.com.estudoProjetoVendas.service.IClienteService;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class ClienteTest {
     }
 
     @Test
-    public void pesquisarCliente(){
+    public void pesquisarCliente() throws Exception {
         Cliente cliente = new Cliente("João Silva",
                 "12345678901",
                 "11999998888",
@@ -36,7 +37,7 @@ public class ClienteTest {
         Assert.assertNotNull(clienteBuscado);
     }
     @Test
-    public void salvarCliente() {
+    public void salvarCliente() throws Exception {
         Cliente cliente = new Cliente("João Silva",
                 "12345678901",
                 "11999998888",
@@ -50,7 +51,7 @@ public class ClienteTest {
         Assert.assertEquals(cliente,clienteBuscado);
     }
     @Test
-    public void editarCliente() {
+    public void editarCliente() throws Exception {
         Cliente cliente = new Cliente("João Silva",
                 "12345678901",
                 "11999998888",
@@ -75,7 +76,7 @@ public class ClienteTest {
 
 
     @Test
-    public void removerCliente() {
+    public void removerCliente() throws Exception {
         Cliente cliente = new Cliente("João Silva",
                 "12345678901",
                 "11999998888",
