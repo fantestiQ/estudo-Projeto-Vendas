@@ -31,10 +31,13 @@ public class ClienteTest {
                 "SP"  );
 
         clienteService.salvar(cliente);
-
         Cliente clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
-
+        Assert.assertEquals(cliente,clienteBuscado);
         Assert.assertNotNull(clienteBuscado);
+
+        clienteService.remover(cliente.getCpf());
+        clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
+        Assert.assertNull(clienteBuscado);
     }
     @Test
     public void salvarCliente() throws Exception {
@@ -49,6 +52,10 @@ public class ClienteTest {
         clienteService.salvar(cliente);
         Cliente clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
         Assert.assertEquals(cliente,clienteBuscado);
+
+        clienteService.remover(cliente.getCpf());
+        clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
+        Assert.assertNull(clienteBuscado);
     }
     @Test
     public void editarCliente() throws Exception {
@@ -72,6 +79,10 @@ public class ClienteTest {
         Cliente clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
         Assert.assertNotEquals("João Silva", clienteBuscado.getNome());
         Assert.assertEquals(clienteEditado,clienteBuscado);
+
+        clienteService.remover(cliente.getCpf());
+        clienteBuscado = clienteService.buscarClientePorCPF(cliente.getCpf());
+        Assert.assertNull(clienteBuscado);
     }
 
 

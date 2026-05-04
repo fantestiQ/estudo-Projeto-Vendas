@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClienteDAO implements IClienteDAO {
 
@@ -42,6 +44,7 @@ public class ClienteDAO implements IClienteDAO {
             connection = ConnectionFactory.getConnection();
             String sql = getClientePorCpf();
             stm = connection.prepareStatement(sql);
+            adicionarParametrosGetPorCpf(stm, cpf);
             resultSet = stm.executeQuery();
 
             if (resultSet.next()){
@@ -64,18 +67,83 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public void remover(Long cpf) {
-        SingletonMap.remove(Cliente.class,cpf);
+    public void remover(Long cpf) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+
+        try {
+            connection = ConnectionFactory.getConnection();
+            String sql = getSqlDeleteCliente();
+            stm = connection.prepareStatement(sql);
+            adicionarParametrosDeleteCliente(stm, cpf);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            cloneConnection(connection,stm,null);
+        }
     }
 
     @Override
-    public Cliente editar(Long cpf, Cliente cliente) {
-        return SingletonMap.editar(Cliente.class,cpf,cliente);
+    public Cliente editar(Long cpf, Cliente cliente) throws SQLException {
+       Connection connection = null;
+       PreparedStatement stm = null;
+
+       try {
+           connection = ConnectionFactory.getConnection();
+           String sql = getSqlUpdateCliente();
+           stm = connection.prepareStatement(sql);
+           adicionarParametrosUpdateCliente(stm,cpf,cliente);
+           stm.executeUpdate();
+
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }finally {
+           cloneConnection(connection,stm,null);
+       }
+
+        return buscarClientePorCPF(cpf);
     }
 
     @Override
-    public List<Cliente> buscarTodos() {
-        return List.of();
+    public List<Cliente> buscarTodos() throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rst = null;
+        List<Cliente> clientes = new ArrayList<>();
+        Cliente cliente = null;
+        try {
+            connection = ConnectionFactory.getConnection();
+            String sql = getSqlSelectAll();
+            stm = connection.prepareStatement(sql);
+            rst = stm.executeQuery();
+
+            while (rst.next()){
+                cliente = new Cliente();
+                String nome = rst.getString("nome");
+                Long cpfBuscado = rst.getLong("cpf");
+                Long tel = rst.getLong("tel");
+                String end = rst.getString("endereco");
+                Integer num = rst.getInt("numero");
+                String cidade = rst.getString("cidade");
+                String estado = rst.getString("estado");
+
+                cliente.setNome(nome);
+                cliente.setCpf(cpfBuscado);
+                cliente.setTel(tel);
+                cliente.setEnd(end);
+                cliente.setNum(num);
+                cliente.setCidade(cidade);
+                cliente.setEstado(estado);
+
+                clientes.add(cliente);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            cloneConnection(connection,stm,rst);
+        }
+        return clientes;
     }
 
     private String getSqlInsert(){
@@ -101,9 +169,50 @@ public class ClienteDAO implements IClienteDAO {
         stb.append("SELECT * FROM tb_clientes c WHERE c.cpf = ?");
         return stb.toString();
     }
-    private void adicionarParametrosGetPorCpf(PreparedStatement stm, Cliente cliente) throws SQLException {
-        stm.setLong(1, cliente.getCpf());
+    private String getSqlSelectAll(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM tb_clientes;");
+        return sb.toString();
     }
+    private void adicionarParametrosGetPorCpf(PreparedStatement stm, Long cpf) throws SQLException {
+        stm.setLong(1, cpf);
+    }
+
+    private String getSqlDeleteCliente(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tb_clientes WHERE cpf = ?");
+        return sb.toString();
+    }
+    private void adicionarParametrosDeleteCliente(PreparedStatement stm, Long cpf) throws SQLException {
+        stm.setLong(1, cpf);
+    }
+    private  String getSqlUpdateCliente(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tb_clientes ");
+        sb.append("SET nome = ?, ");
+        sb.append("cpf = ?, ");
+        sb.append("tel = ?, ");
+        sb.append("endereco = ?, ");
+        sb.append("numero = ?, ");
+        sb.append("cidade = ?, ");
+        sb.append("estado = ? ");
+        sb.append("WHERE cpf= ?");
+        return sb.toString();
+    }
+
+    private void adicionarParametrosUpdateCliente(PreparedStatement stm, Long cpf,
+                                                  Cliente cliente) throws SQLException {
+        stm.setString(1,cliente.getNome());
+        stm.setLong(2,cliente.getCpf());
+        stm.setLong(3,cliente.getTel());
+        stm.setString(4,cliente.getEnd());
+        stm.setInt(5,cliente.getNum());
+        stm.setString(6,cliente.getCidade());
+        stm.setString(7,cliente.getEstado());
+        stm.setLong(8,cpf);
+
+    }
+
 
     private void cloneConnection(Connection connection, PreparedStatement stm, ResultSet rt) throws SQLException {
         if (connection != null && !connection.isClosed()){

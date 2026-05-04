@@ -12,6 +12,7 @@ public class Cliente {
     private String estado;
 
 
+    public Cliente(){}
     public Cliente(String nome, Long cpf, Long tel, String end, Integer num, String cidade, String estado) {
         this.nome = nome;
         this.cpf = cpf;

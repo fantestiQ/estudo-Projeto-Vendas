@@ -1,5 +1,7 @@
 package br.com.estudoProjetoVendas;
 
+import com.sun.source.tree.TryTree;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,8 +15,12 @@ public class ConnectionFactory {
     public ConnectionFactory (Connection connection){}
 
     public static Connection getConnection(){
-        if (connection == null){
+        try{
+        if (connection == null || connection.isClosed()){
             return connection = initConnection();
+        }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
         return connection;
     }
