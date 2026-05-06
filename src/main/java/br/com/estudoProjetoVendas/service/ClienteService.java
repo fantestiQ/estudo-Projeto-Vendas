@@ -36,7 +36,7 @@ public class ClienteService implements IClienteService  {
     }
 
     @Override
-    public List<Cliente> buscarTodos() {
-        return List.of();
+    public List<Cliente> buscarTodos() throws Exception {
+        return  clienteDao.buscarTodos();
     }
 }

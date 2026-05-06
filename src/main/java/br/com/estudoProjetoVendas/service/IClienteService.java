@@ -14,5 +14,5 @@ public interface IClienteService {
 
     Cliente editar(Long cpf, Cliente cliente) throws Exception;
 
-    List<Cliente> buscarTodos();
+    List<Cliente> buscarTodos() throws Exception;
 }
